@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "group:recommended",
+    "group:monorepos",
+    "replacements:all",
+    "workarounds:all",
+    "helpers:pinGitHubActionDigests",
+    ":ignoreModulesAndTests"
+  ],
+  "dependencyDashboard": true,
+  "pre-commit": {
+    "enabled": true
+  },
+  "labels": ["renovate"],
+  "rangeStrategy": "pin",
+  "rebaseWhen": "behind-base-branch",
+  "semanticCommits": "enabled",
+  "platformAutomerge": true,
+  "automerge": true,
+  "major": {
+    "automerge": false
+  }
+}

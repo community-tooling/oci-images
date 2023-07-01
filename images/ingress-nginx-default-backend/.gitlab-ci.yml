@@ -1,0 +1,24 @@
+stages:
+  - build
+
+include:
+  - project: open/ci-templates
+    file: kaniko.yml
+
+variables:
+  # renovate: datasource=docker depName=nginx
+  TAG: 1.24.0
+
+kaniko-release:
+  stage: build
+  extends: .kaniko-gitlab
+  script:
+    - /kaniko/executor --context ${CI_PROJECT_DIR} --dockerfile ${CI_PROJECT_DIR}/Dockerfile --destination $CI_REGISTRY_IMAGE:$TAG
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+kaniko:
+  stage: build
+  extends: .kaniko-gitlab
+  script:
+    - /kaniko/executor --context ${CI_PROJECT_DIR} --dockerfile ${CI_PROJECT_DIR}/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
