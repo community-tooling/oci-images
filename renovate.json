@@ -30,5 +30,6 @@
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "python/cpython"
     }
-  ]
+  ],
+  "ignorePaths": ["images/mailtrain"]
 }
