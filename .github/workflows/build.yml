@@ -29,10 +29,10 @@ jobs:
           escape_json: false
 
       - name: List all changed files
-        run: echo ${{ steps.changed-files.outputs.all_changed_files }}
+        run: echo ${{ steps.changed-files.outputs.all_modified_files }}
 
     outputs:
-      matrix: ${{ steps.changed-files.outputs.all_changed_files }}
+      matrix: ${{ steps.changed-files.outputs.all_modified_files }}
 
   build:
     needs: generate-matrix
