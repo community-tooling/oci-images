@@ -1,0 +1,33 @@
+# we do NOT want to receive emails from any domain... specify an empty list here
+mydestination =
+
+# tells Postfix from which networks it should accept emails to send. Accept from everywhere
+mynetworks = 0.0.0.0/0 [::]/0
+
+# accept emails from all network interfaces (we will restrict this using Docker networks)
+inet_interfaces = all
+
+relayhost = ${RELAY_HOST}:${RELAY_PORT}
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = lmdb:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_use_tls = yes
+smtp_tls_security_level = encrypt
+smtp_tls_wrappermode = yes
+
+# do not require encryption from the client to this server
+smtpd_tls_security_level = none
+smtpd_relay_restrictions =  permit_mynetworks, defer_unauth_destination
+
+# cleanup incoming emails
+always_add_missing_headers = yes
+
+# hide details about this instance of Postfix
+smtpd_banner = $myhostname
+
+# hide details of the real email sender
+header_checks = regexp:/etc/postfix/header_checks
+
+# disable useless services
+biff = no
+readme_directory = no
