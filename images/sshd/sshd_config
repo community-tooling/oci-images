@@ -1,0 +1,57 @@
+Port 22
+Protocol 2
+
+# HostKeys for protocol version 2
+HostKey /etc/ssh/keys/ssh_host_ed25519_key
+HostKey /etc/ssh/keys/ssh_host_rsa_key
+HostKey /etc/ssh/keys/ssh_host_ecdsa_key
+
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com,hmac-sha1
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+MaxAuthTries 4
+MaxSessions 10
+MaxStartups 3:80:7
+LoginGraceTime 30s
+ClientAliveCountMax 3
+
+PermitRootLogin no
+StrictModes yes
+PubkeyAuthentication yes
+
+AuthorizedKeysFile /etc/ssh/authorized_keys/%u %h/.ssh/authorized_keys %h/.ssh/authorized_keys2
+IgnoreRhosts yes
+
+HostbasedAuthentication no
+UseDNS no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+PasswordAuthentication no
+
+X11Forwarding no
+X11DisplayOffset 10
+PrintMotd no
+TCPKeepAlive yes
+Compression yes
+
+Banner none
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+Subsystem sftp internal-sftp
+
+Match Group sftp
+        AuthorizedKeysFile /etc/ssh/authorized_keys/%u
+        ChrootDirectory %h
+        X11Forwarding no
+        AllowAgentForwarding no
+        AllowTcpForwarding no
+        PermitTunnel no
+        ForceCommand internal-sftp
+
