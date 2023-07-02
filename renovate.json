@@ -20,5 +20,14 @@
   "automerge": true,
   "major": {
     "automerge": false
-  }
+  },
+  "regexManagers": [
+    {
+      "description": "Upgrade python-version version",
+      "fileMatch": ["(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$"],
+      "matchStrings": ["python-version:\\s(?<currentValue>.*)"],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "python/cpython"
+    }
+  ]
 }

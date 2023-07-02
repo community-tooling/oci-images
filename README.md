@@ -23,7 +23,7 @@ with `YYYYMMDD` being the date of publishing and `t` the unix timestamp.
 
 ## Contributing
 
-You need to have [pre-commit](pre-commit.com) installed.
+You need to have [pre-commit](pre-commit.com) installed and a container daemon running (for hadolint)
 
 Run `make init` after you have cloned the repository to set up pre-commit.
 
