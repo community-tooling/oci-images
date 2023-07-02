@@ -6,6 +6,7 @@
     "replacements:all",
     "workarounds:all",
     "helpers:pinGitHubActionDigests",
+    "docker:pinDigests",
     ":ignoreModulesAndTests"
   ],
   "dependencyDashboard": true,
