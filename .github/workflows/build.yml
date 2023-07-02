@@ -88,8 +88,6 @@ jobs:
           images: |
             ghcr.io/community-tooling/oci-images/${{ matrix.image }}
           tags: |
-            type=ref,event=pr
-            type=sha
             type=raw,value=${{ steps.calver.outputs.version }}
 
       - name: Build and push
