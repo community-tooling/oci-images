@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} node:9.11.2-slim@sha256:288b29c1925d65b2d7d8701f8ada201e7dcd066438c0fb4299c35dff129b893f
+FROM --platform=${BUILDPLATFORM} node:20.3.1-slim@sha256:dc951f879d6b8884ca0f77c9137c1a0e7206b9d704be7ff3edff1d1329b97c9a
 
 WORKDIR /app
 
