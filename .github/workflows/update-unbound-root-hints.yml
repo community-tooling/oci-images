@@ -1,4 +1,4 @@
-name: "Close stale issues"
+name: "Update unbound root hints"
 on:
   workflow_dispatch:
   schedule:
