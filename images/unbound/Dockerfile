@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} alpine:3.13.5@sha256:1d30d1ba3cb90962067e9b29491fbd56997979d54376f23f01448b5c5cd8b462
+FROM --platform=${BUILDPLATFORM} alpine:3.18.2@sha256:82d1e9d7ed48a7523bdebc18cf6290bdb97b82302a8a9c27d4fe885949ea94d1
 
 # hadolint ignore=DL3018
 RUN apk add --no-cache unbound
