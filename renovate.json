@@ -31,5 +31,12 @@
       "depNameTemplate": "python/cpython"
     }
   ],
+  "packageRules": [
+    {
+      "matchDatasources": ["github-tags"],
+      "matchPackageNames": ["python/cpython"],
+      "extractVersion": "^v(?<version>.*)$"
+    }
+  ],
   "ignorePaths": ["images/mailtrain"]
 }
