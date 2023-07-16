@@ -1,3 +1,11 @@
+ci:
+  autofix_commit_msg: |
+    chore: autofixes from pre-commit
+
+  autoupdate_commit_msg: "chore(deps): update pre-commit dependencies"
+  # We use renovate for this anyway
+  autoupdate_schedule: quarterly
+
 default_stages:
   - commit
 
