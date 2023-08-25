@@ -1,5 +1,9 @@
-FROM --platform=${BUILDPLATFORM} alpine:3.18.3@sha256:7144f7bab3d4c2648d7e59409f15ec52a18006a128c733fcff20d3a4a54ba44a
+FROM alpine:3.18.3@sha256:7144f7bab3d4c2648d7e59409f15ec52a18006a128c733fcff20d3a4a54ba44a
 
+# Pinning the openssh version here does not work well since we can't upgrade the alpine version and the
+# openssh version with the same PR, see https://github.com/renovatebot/renovate/discussions/10452.
+# Therefore, we opt to not do this at all for now.
+#
 # hadolint ignore=DL3018
 RUN apk add --no-cache openssh
 
