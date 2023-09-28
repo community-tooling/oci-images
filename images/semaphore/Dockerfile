@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} node:18.17.1-alpine@sha256:3482a20c97e401b56ac50ba8920cc7b5b2022bfc6aa7d4e4c231755770cf892f AS builder
+FROM --platform=${TARGETPLATFORM} node:18.18.0-alpine@sha256:619ce27eb37c7c0476bd518085bf1ba892e2148fc1ab5dbaff2f20c56e50444d AS builder
 
 # renovate: datasource=github=tags depName=NickColley/semaphore
 ENV SEMAPHORE_VERSION=1.0.0
@@ -14,6 +14,5 @@ RUN apk add --no-cache sed && \
 
 RUN yarn --production --pure-lockfile && yarn build
 
-
-FROM --platform=${TARGETPLATFORM} nginx:1.25.2-alpine-slim@sha256:487b528ac1b4b67ff38cd43d925950a6c2baeed199e830f808355d91c7b24bd5
+FROM --platform=${TARGETPLATFORM} nginx:1.25.2-alpine-slim@sha256:c158a8722cc5c67d557697606a1d8d9b942e568b521df9f8723e1d8aa0227485
 COPY --from=builder /semaphore/__sapper__/export /usr/share/nginx/html/
