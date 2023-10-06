@@ -115,7 +115,7 @@ jobs:
           if [[ $SCOPE != "" ]]; then
             echo "Running with workflow_dispatch, using input directly"
             echo scope=$SCOPE >> $GITHUB_OUTPUT
-            exit 1
+            exit 0
           fi
 
           scope=$(echo $MESSAGE | head -n 1 | sed -E 's/^.*\(([a-z]+)\).*$/\1/g')
