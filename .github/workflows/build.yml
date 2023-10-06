@@ -3,6 +3,15 @@ name: Build
 
 on:
   workflow_dispatch:
+    inputs:
+      scope:
+        required: true
+        type: choice
+        description: The version bump for all images
+        options:
+          - major
+          - minor
+          - patch
   push:
     branches:
       - main
@@ -96,9 +105,19 @@ jobs:
       - name: Get commit scope
         id: commit-scope
         env:
-          # Use the PR title if it exists since we use this as the commit message on squashing
+          # Use the workflow_dispatch input on workflow_dispatch
+          SCOPE: ${{ github.event.inputs.scope }}
+
+          # Use the PR title if it exists since we use this as the commit message on squashing (only exists on PRs)
+          # Use the head_commit message on all other events (does not exist on workflow_dispatch)
           MESSAGE: ${{ github.event.pull_request.title || github.event.head_commit.message }}
         run: |
+          if [[ $SCOPE != "" ]]; then
+            echo "Running with workflow_dispatch, using input directly"
+            echo scope=$SCOPE >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
           scope=$(echo $MESSAGE | head -n 1 | sed -E 's/^.*\(([a-z]+)\).*$/\1/g')
           if [[ "$scope" =~ ^(major|minor|patch)$ ]]; then
             echo scope=$scope >> $GITHUB_OUTPUT
