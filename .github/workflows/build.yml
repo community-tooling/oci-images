@@ -59,15 +59,27 @@ jobs:
     steps:
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
 
+      # This is needed to skip the job when an image is deleted
+      - name: Check if directory still exists
+        id: dir-check
+        run: |
+          if [ -d images/${{ matrix.image }} ]; then
+            echo exists=true >> $GITHUB_OUTPUT
+          else
+            echo exists=false >> $GITHUB_OUTPUT
+          fi
+
       - name: Set up QEMU
+        if: ${{ steps.dir-check.outputs.exists == 'true' }}
         uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
 
       - name: Set up Docker Buildx
+        if: ${{ steps.dir-check.outputs.exists == 'true' }}
         id: buildx
         uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226 # v3.0.0
 
       - name: Login to GHCR
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.dir-check.outputs.exists == 'true'
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
           registry: ghcr.io
@@ -75,11 +87,13 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate datever tag
+        if: ${{ steps.dir-check.outputs.exists == 'true' }}
         id: calver
         run: |
           echo version="1.$(date +%-Y%m%d.%s)" >> $GITHUB_OUTPUT
 
       - name: Docker meta
+        if: ${{ steps.dir-check.outputs.exists == 'true' }}
         id: meta
         uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
         with:
@@ -91,6 +105,7 @@ jobs:
             type=raw,value=${{ steps.calver.outputs.version }}
 
       - name: Build and push
+        if: ${{ steps.dir-check.outputs.exists == 'true' }}
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
           context: images/${{ matrix.image }}

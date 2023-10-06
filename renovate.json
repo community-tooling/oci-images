@@ -39,6 +39,5 @@
       "extractVersion": "^v(?<version>.*)$",
       "automerge": true
     }
-  ],
-  "ignorePaths": ["images/mailtrain"]
+  ]
 }
