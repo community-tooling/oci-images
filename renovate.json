@@ -36,7 +36,8 @@
     {
       "matchDatasources": ["github-tags"],
       "matchPackageNames": ["python/cpython"],
-      "extractVersion": "^v(?<version>.*)$"
+      "extractVersion": "^v(?<version>.*)$",
+      "automerge": true
     }
   ],
   "ignorePaths": ["images/mailtrain"]
