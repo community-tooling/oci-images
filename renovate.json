@@ -20,8 +20,13 @@
   "semanticCommits": "enabled",
   "platformAutomerge": true,
   "automerge": true,
+  "semanticCommitScope": "patch",
   "major": {
-    "automerge": false
+    "automerge": false,
+    "semanticCommitScope": "major"
+  },
+  "minor": {
+    "semanticCommitScope": "minor"
   },
   "regexManagers": [
     {
@@ -30,6 +35,15 @@
       "matchStrings": ["python-version:\\s(?<currentValue>.*)"],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "python/cpython"
+    },
+    {
+      "description": "Update semver tool",
+      "fileMatch": ["(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$"],
+      "matchStrings": [
+        "https://raw.githubusercontent.com/fsaintjacques/semver-tool/(?<currentValue>.+)/src/semver"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "fsaintjacques/semver-tool"
     }
   ],
   "packageRules": [

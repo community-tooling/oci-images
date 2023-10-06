@@ -69,6 +69,9 @@ jobs:
             echo exists=false >> $GITHUB_OUTPUT
           fi
 
+      - name: Install semver tool
+        run: wget -O /usr/local/bin/semver https://raw.githubusercontent.com/fsaintjacques/semver-tool/3.4.0/src/semver && chmod +x /usr/local/bin/semver
+
       - name: Set up QEMU
         if: ${{ steps.dir-check.outputs.exists == 'true' }}
         uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
@@ -86,11 +89,29 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate datever tag
-        if: ${{ steps.dir-check.outputs.exists == 'true' }}
-        id: calver
+      - name: Get most recent tag
+        id: tag
+        run: echo tag=$(skopeo list-tags "docker://ghcr.io/community-tooling/oci-images/${{ matrix.image }}" | jq -r '.Tags | sort | last') >> $GITHUB_OUTPUT
+
+      - name: Get commit scope
+        id: commit-scope
+        env:
+          # Use the PR title if it exists since we use this as the commit message on squashing
+          MESSAGE: ${{ github.event.pull_request.title || github.event.head_commit.message }}
         run: |
-          echo version="1.$(date +%-Y%m%d.%s)" >> $GITHUB_OUTPUT
+          scope=$(echo $MESSAGE | head -n 1 | sed -E 's/^.*\(([a-z]+)\).*$/\1/g')
+          if [[ "$scope" =~ ^(major|minor|patch)$ ]]; then
+            echo scope=$scope >> $GITHUB_OUTPUT
+          else
+            echo "::error title=Invalid commit scope::The commit scope is not an allowed value, check the README section on versioning"
+            exit 1
+          fi
+
+      - name: Generate tag
+        if: ${{ steps.dir-check.outputs.exists == 'true' }}
+        id: version
+        run: |
+          echo version="$(semver bump ${{ steps.commit-scope.outputs.scope }} ${{ steps.tag.outputs.tag }})" >> $GITHUB_OUTPUT
 
       - name: Docker meta
         if: ${{ steps.dir-check.outputs.exists == 'true' }}
@@ -102,7 +123,7 @@ jobs:
           images: |
             ghcr.io/community-tooling/oci-images/${{ matrix.image }}
           tags: |
-            type=raw,value=${{ steps.calver.outputs.version }}
+            type=raw,value=${{ steps.version.outputs.version }}
 
       - name: Build and push
         if: ${{ steps.dir-check.outputs.exists == 'true' }}
@@ -110,7 +131,7 @@ jobs:
         with:
           context: images/${{ matrix.image }}
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 

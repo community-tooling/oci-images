@@ -6,15 +6,21 @@ Check out the different directories in [`images`](images/)
 
 ## Versioning
 
-Currently, all images are automatically versioned in a prefixed calver style. This does not tell us anything about the versions of the software in the image, but it fulfills the Semantic Versioning 2.0.0 specification and allows us to change to e.g. actual semantic versioning or another format later by bumping the major version.
+Images are versioned automatically based on the semantic commit scope of the commit changing them.
+This means that your Pull request needs to specify the kind of version bump that should be done in the tile
 
-The format looks as follows:
+Valid scopes are: `major`, `minor`, `patch`
+
+**Examples for PR titles**
 
 ```
-1.YYYYMMDD.t
+feat(minor): Add new functionality
+fix(major): Fix a bug, but the fix is a breaking change
+fix(patch): Fix a bug without breaking things
+chore(patch): Update dependencies
 ```
 
-with `YYYYMMDD` being the date of publishing and `t` the unix timestamp.
+renovate is configured to automatically apply the `major` and `minor` scope to the respective updates and the `patch` scope to all other commits it creates.
 
 ## Requirements for images
 
