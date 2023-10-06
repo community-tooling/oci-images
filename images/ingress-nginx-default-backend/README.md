@@ -22,3 +22,5 @@ The error page priority is as follows:
 ## Page template
 
 The error page template was designed by [dkaramazov](https://codepen.io/dkaramazov) on CodePen.
+
+<!-- Remove me! This comment is used to bump the image version with the tagging changes. Remove it when you edit this file, please. -->

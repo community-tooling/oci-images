@@ -9,3 +9,5 @@ This image sets up an SSHD server with STFTP enabled and a user `upload` with th
   - ssh_host_ed25519_key (`ssh-keygen -t ed25519`)
   - ssh_host_rsa_key (`ssh-keygen -t rsa`)
   - ssh_host_ecdsa_key (`ssh-keygen -t ecdsa`)
+
+<!-- Remove me! This comment is used to bump the image version with the tagging changes. Remove it when you edit this file, please. -->

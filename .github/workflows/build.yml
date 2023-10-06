@@ -100,7 +100,8 @@ jobs:
 
       - name: Get most recent tag
         id: tag
-        run: echo tag=$(skopeo list-tags "docker://ghcr.io/community-tooling/oci-images/${{ matrix.image }}" | jq -r '.Tags | sort | last') >> $GITHUB_OUTPUT
+        # Some of our older tags are "sha-${checksum}", so we need to ignore them
+        run: echo tag=$(skopeo list-tags "docker://ghcr.io/community-tooling/oci-images/${{ matrix.image }}" | jq -r '.Tags | sort | .[] | select(contains("sha-") | not)' | tail -n 1) >> $GITHUB_OUTPUT
 
       - name: Get commit scope
         id: commit-scope
