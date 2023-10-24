@@ -1,4 +1,4 @@
-FROM --platform=${TARGETPLATFORM} restic/restic:0.16.0@sha256:5777caeaf211e18537cf8d24cff3de7b12309d6e27c51e39eb757c5da2d52c58
+FROM --platform=${TARGETPLATFORM} restic/restic:0.16.1@sha256:91ddef1ac2db8622f541451870b51b65770385e04de062a102c6db3db5e1042f
 
 # hadolint ignore=DL3018
 RUN apk add --update --no-cache mysql-client
