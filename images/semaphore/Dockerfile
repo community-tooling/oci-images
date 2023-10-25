@@ -14,5 +14,5 @@ RUN apk add --no-cache sed && \
 
 RUN yarn --production --pure-lockfile && yarn build
 
-FROM --platform=${TARGETPLATFORM} nginx:1.25.3-alpine-slim@sha256:b9827a75a9a9004c5566a26364b912752cd17949fa3b2d5da20c4970d23c15ca
+FROM --platform=${TARGETPLATFORM} nginx:1.25.3-alpine-slim@sha256:d45f4c998198583de669cd0ea8ab819ab344d57d6bf42b6f121d0ec097a032e8
 COPY --from=builder /semaphore/__sapper__/export /usr/share/nginx/html/
