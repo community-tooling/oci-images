@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
-          token: ${{ secrets.BOT_CHART_UPDATE_TOKEN }}
+          token: ${{ secrets.BOT_FILE_UPDATE_TOKEN }}
 
       - name: Update root hints
         run: curl --output images/unbound/root.hints https://www.internic.net/domain/named.cache
@@ -21,7 +21,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
         with:
-          token: ${{ secrets.BOT_CHART_UPDATE_TOKEN }}
+          token: ${{ secrets.BOT_FILE_UPDATE_TOKEN }}
           branch: chore/update-unbound-root-hints
           title: "chore(patch): update root hints"
           body: |
