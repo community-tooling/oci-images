@@ -1,4 +1,4 @@
-FROM --platform=${TARGETPLATFORM} node:18.20.1-alpine@sha256:6d9d5269cbe4088803e9ef81da62ac481c063b60cadbe8e628bfcbb12296d901 AS builder
+FROM --platform=${TARGETPLATFORM} node:18.20.2-alpine@sha256:864a8f5dcc227206596ee497cd6e433cc4e060fa594bdbedd96aedda81490457 AS builder
 
 # renovate: datasource=github=tags depName=NickColley/semaphore
 ENV SEMAPHORE_VERSION=1.0.0
