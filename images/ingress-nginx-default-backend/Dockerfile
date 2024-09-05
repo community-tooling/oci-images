@@ -1,4 +1,4 @@
-FROM --platform=${TARGETPLATFORM} nginx:1.27.1@sha256:0e4fe3ef42d60ff3586428b7892f9e5d0156206117c701e4e2282f1b29e129b5
+FROM --platform=${TARGETPLATFORM} nginx:1.27.1@sha256:135fbc7ed19c8f644ddf678e68292e678696908451dad7ee2fd4e0cf861f4b6f
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY error_pages/* /usr/share/nginx/html/
