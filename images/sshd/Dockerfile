@@ -1,4 +1,4 @@
-FROM --platform=${TARGETPLATFORM} alpine:3.20.3@sha256:1e42bbe2508154c9126d48c2b8a75420c3544343bf86fd041fb7527e017a4b4a
+FROM --platform=${TARGETPLATFORM} alpine:3.21.0@sha256:e323a465c03a31ad04374fc7239144d0fd4e2b92da6e3e0655580476d3a84621
 
 # Pinning the openssh version here does not work well since we can't upgrade the alpine version and the
 # openssh version with the same PR, see https://github.com/renovatebot/renovate/discussions/10452.
