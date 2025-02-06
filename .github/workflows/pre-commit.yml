@@ -18,7 +18,7 @@ jobs:
         id: setup-python
         uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         with:
-          python-version: 3.13.1
+          python-version: 3.13.2
 
       - name: Cache pre-commit dependencies
         uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
