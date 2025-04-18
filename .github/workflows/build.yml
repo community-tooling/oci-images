@@ -20,6 +20,11 @@ on:
 permissions:
   packages: write
 
+# We need the builds to run one after another chronologically
+# If they don't, an image for a newer commit might get an older version.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   generate-matrix:
     runs-on: ubuntu-latest
