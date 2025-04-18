@@ -1,4 +1,4 @@
-FROM busybox:1.37.0 AS extract
+FROM busybox:1.37.0@sha256:37f7b378a29ceb4c551b1b5582e27747b855bbfaa73fa11914fe0df028dc581f AS extract
 
 # renovate: datasource=github-releases depName=just-containers/s6-overlay
 ARG S6_OVERLAY_VERSION=v3.2.0.2
@@ -7,7 +7,7 @@ ARG S6_OVERLAY_VERSION=v3.2.0.2
 ADD https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
 RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
 
-FROM ghcr.io/paperless-ngx/paperless-ngx:2.15.1
+FROM ghcr.io/paperless-ngx/paperless-ngx:2.15.1@sha256:a06d051e0c422e83498a36676d504d94de262686f167cccc826a71170ddef00a
 
 # Replace the paperless s6 configuration with the default configuration.
 # This is needed so that paperless does not start
