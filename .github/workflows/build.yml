@@ -91,7 +91,7 @@ jobs:
         uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3.10.0
 
       - name: Login to GHCR
-        if: github.event_name != 'pull_request' && steps.dir-check.outputs.exists == 'true'
+        if: steps.dir-check.outputs.exists == 'true' && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'push-image'))
         uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
           registry: ghcr.io
@@ -101,7 +101,13 @@ jobs:
       - name: Get most recent tag
         id: tag
         # Some of our older tags are "sha-${checksum}", so we need to ignore them
-        run: echo tag=$(skopeo list-tags "docker://ghcr.io/community-tooling/oci-images/${{ matrix.image }}" | jq -r '.Tags | sort | .[] | select(contains("sha-") | not)' | tail -n 1) >> $GITHUB_OUTPUT
+        # If no tags are published, assume 0.0.0 as old tag
+        run: |
+          tag=$(skopeo list-tags "docker://ghcr.io/community-tooling/oci-images/${{ matrix.image }}" | jq -r '.Tags | sort | .[] | select(contains("sha-") | not)' | tail -n 1)
+          if [[ $tag -eq "" ]]; then
+            tag="0.0.0"
+          fi
+          echo tag="$tag" >> $GITHUB_OUTPUT
 
       - name: Get commit scope
         id: commit-scope
@@ -142,8 +148,10 @@ jobs:
             latest=false
           images: |
             ghcr.io/community-tooling/oci-images/${{ matrix.image }}
+
+          # If we're in a PR and pushing for the PR, use the SHA sum as tag, else use the defined version
           tags: |
-            type=raw,value=${{ steps.version.outputs.version }}
+            type=raw,value=${{ contains(github.event.pull_request.labels.*.name, 'push-image') && github.sha || steps.version.outputs.version }}
 
       - name: Build and push
         if: ${{ steps.dir-check.outputs.exists == 'true' }}
@@ -151,7 +159,7 @@ jobs:
         with:
           context: images/${{ matrix.image }}
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' }}
+          push: ${{ github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || contains(github.event.pull_request.labels.*.name, 'push-image') }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 

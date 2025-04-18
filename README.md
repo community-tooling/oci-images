@@ -29,7 +29,10 @@ renovate is configured to automatically apply the `major` and `minor` scope to t
 
 ## Contributing
 
-You need to have [pre-commit](pre-commit.com) installed and a container daemon running (for hadolint)
+You need to have installed:
+
+- [pre-commit](pre-commit.com)
+- [hadolint](https://github.com/hadolint/hadolint)
 
 Run `make init` after you have cloned the repository to set up pre-commit.
 
