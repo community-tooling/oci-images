@@ -14,5 +14,8 @@ FROM ghcr.io/paperless-ngx/paperless-ngx:2.15.2@sha256:80d1a7fe4f638cb00c1dcf5ff
 RUN rm -r /etc/s6-overlay/s6-rc.d/*
 COPY --from=extract /etc/s6-overlay/s6-rc.d/ /etc/s6-overlay/s6-rc.d/
 
-COPY export /usr/local/bin/export
-CMD ["/usr/local/bin/export"]
+# COPY export /usr/local/bin/export
+# CMD ["/usr/local/bin/export"]
+CMD ["/usr/local/bin/document_exporter", "/export"]
+
+ENTRYPOINT [ "/init" ]
