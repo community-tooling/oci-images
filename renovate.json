@@ -6,7 +6,7 @@
     "group:monorepos",
     "group:recommended",
     "helpers:pinGitHubActionDigests",
-    "regexManagers:dockerfileVersions",
+    "customManagers:dockerfileVersions",
     "replacements:all",
     "workarounds:all"
   ],
@@ -14,7 +14,9 @@
   "pre-commit": {
     "enabled": true
   },
-  "labels": ["renovate"],
+  "labels": [
+    "renovate"
+  ],
   "rangeStrategy": "pin",
   "rebaseWhen": "behind-base-branch",
   "semanticCommits": "enabled",
@@ -28,17 +30,25 @@
   "minor": {
     "semanticCommitScope": "minor"
   },
-  "regexManagers": [
+  "customManagers": [
     {
+      "customType": "regex",
       "description": "Upgrade python-version version",
-      "fileMatch": ["(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$"],
-      "matchStrings": ["python-version:\\s(?<currentValue>.*)"],
+      "managerFilePatterns": [
+        "/(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "python-version:\\s(?<currentValue>.*)"
+      ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "python/cpython"
     },
     {
+      "customType": "regex",
       "description": "Update semver tool",
-      "fileMatch": ["(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$"],
+      "managerFilePatterns": [
+        "/(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$/"
+      ],
       "matchStrings": [
         "https://raw.githubusercontent.com/fsaintjacques/semver-tool/(?<currentValue>.+)/src/semver"
       ],
@@ -48,8 +58,12 @@
   ],
   "packageRules": [
     {
-      "matchDatasources": ["github-tags"],
-      "matchPackageNames": ["python/cpython"],
+      "matchDatasources": [
+        "github-tags"
+      ],
+      "matchPackageNames": [
+        "python/cpython"
+      ],
       "extractVersion": "^v(?<version>.*)$",
       "automerge": true
     }
