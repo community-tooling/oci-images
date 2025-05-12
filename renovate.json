@@ -14,9 +14,7 @@
   "pre-commit": {
     "enabled": true
   },
-  "labels": [
-    "renovate"
-  ],
+  "labels": ["renovate"],
   "rangeStrategy": "pin",
   "rebaseWhen": "behind-base-branch",
   "semanticCommits": "enabled",
@@ -37,9 +35,7 @@
       "managerFilePatterns": [
         "/(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$/"
       ],
-      "matchStrings": [
-        "python-version:\\s(?<currentValue>.*)"
-      ],
+      "matchStrings": ["python-version:\\s(?<currentValue>.*)"],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "python/cpython"
     },
@@ -58,12 +54,8 @@
   ],
   "packageRules": [
     {
-      "matchDatasources": [
-        "github-tags"
-      ],
-      "matchPackageNames": [
-        "python/cpython"
-      ],
+      "matchDatasources": ["github-tags"],
+      "matchPackageNames": ["python/cpython"],
       "extractVersion": "^v(?<version>.*)$",
       "automerge": true
     }
