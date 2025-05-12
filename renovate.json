@@ -6,7 +6,7 @@
     "group:monorepos",
     "group:recommended",
     "helpers:pinGitHubActionDigests",
-    "regexManagers:dockerfileVersions",
+    "customManagers:dockerfileVersions",
     "replacements:all",
     "workarounds:all"
   ],
@@ -28,17 +28,23 @@
   "minor": {
     "semanticCommitScope": "minor"
   },
-  "regexManagers": [
+  "customManagers": [
     {
+      "customType": "regex",
       "description": "Upgrade python-version version",
-      "fileMatch": ["(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$"],
+      "managerFilePatterns": [
+        "/(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$/"
+      ],
       "matchStrings": ["python-version:\\s(?<currentValue>.*)"],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "python/cpython"
     },
     {
+      "customType": "regex",
       "description": "Update semver tool",
-      "fileMatch": ["(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$"],
+      "managerFilePatterns": [
+        "/(^workflow-templates|\\.github/workflows)/[^/]+\\.ya?ml$/"
+      ],
       "matchStrings": [
         "https://raw.githubusercontent.com/fsaintjacques/semver-tool/(?<currentValue>.+)/src/semver"
       ],
