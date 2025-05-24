@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
+# This does the same as calling "document_exporter /export" when exec-ing into the container
 exec /usr/local/bin/document_exporter /export

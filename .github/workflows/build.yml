@@ -108,7 +108,7 @@ jobs:
         # Some of our older tags are "sha-${checksum}", so we need to ignore them
         # If no tags are published, assume 0.0.0 as old tag
         run: |
-          tag=$(skopeo list-tags "docker://ghcr.io/community-tooling/oci-images/${{ matrix.image }}" | jq -r '.Tags | sort | .[] | select(contains("sha-") | not)' | tail -n 1)
+          tag=$(skopeo list-tags "docker://ghcr.io/community-tooling/oci-images/${{ matrix.image }}" | jq -r '.Tags | sort | .[] | select(contains("sha-") | not)' | grep -E '[0-9]+\.[0-9]+\.[0-9]+' | tail -n 1)
           if [[ $tag -eq "" ]]; then
             tag="0.0.0"
           fi
@@ -134,7 +134,7 @@ jobs:
           if [[ "$scope" =~ ^(major|minor|patch)$ ]]; then
             echo scope=$scope >> $GITHUB_OUTPUT
           else
-            echo "::error title=Invalid commit scope::The commit scope is not an allowed value, check the README section on versioning"
+            echo "::error title=Invalid commit scope::The commit scope is not an allowed value, check the README section on versioning. The PR title must have the correct scope."
             exit 1
           fi
 
