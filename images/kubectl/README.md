@@ -5,6 +5,7 @@ Alpine-based image with up-to-date kubectl versions.
 This image also includes:
 
 - bash, to execute bash scripts
+- coreutils, to execute basic GNU commands
 - curl, for HTTP requests
 - jq, to parse JSON
 

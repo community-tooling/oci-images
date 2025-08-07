@@ -14,6 +14,7 @@ ARG URL="https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/k
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
   bash \
+  coreutils \
   curl \
   jq
 
