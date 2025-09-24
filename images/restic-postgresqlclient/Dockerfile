@@ -2,7 +2,7 @@
 FROM restic/restic:0.18.1@sha256:39d9072fb5651c80d75c7a811612eb60b4c06b32ffe87c2e9f3c7222e1797e76 as restic
 
 # Get the latest postgres alpine image to support the latest postgres server version
-FROM postgres:17.6-alpine@sha256:d5f196a551b5cef1c70853c6dd588f456d16ca4ea733e3f31c75bc1ae2f65f3f
+FROM postgres:17.6-alpine@sha256:efe21e7fcf192082a0732edb108ed0d97c06102e17d2805250ea5cd676f8c42b
 COPY --from=restic /usr/bin/restic /usr/bin
 
 ENTRYPOINT ["/usr/bin/restic"]
