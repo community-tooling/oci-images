@@ -7,7 +7,7 @@ ARG S6_OVERLAY_VERSION=v3.2.0.2
 ADD https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
 RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
 
-FROM ghcr.io/paperless-ngx/paperless-ngx:2.20.6@sha256:a28330462994b937938e02aaa5632a1effcc7f9acfba96c1bef9c50e1167a027
+FROM ghcr.io/paperless-ngx/paperless-ngx:2.20.7@sha256:7b937cb2fa2885ab0ecfceb8c7e8827e2312472d9d897a270097ba7f5522dcdc
 
 # Replace the paperless s6 configuration with the default configuration.
 # This is needed so that paperless does not start
