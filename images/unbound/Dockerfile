@@ -10,6 +10,7 @@ COPY root.hints /etc/unbound/root.hints
 RUN chown -R unbound:unbound /etc/unbound && \
     unbound-checkconf
 
+# hadolint ignore=DL3066
 USER unbound
 
 EXPOSE 5353/udp
