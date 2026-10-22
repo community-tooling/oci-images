@@ -1,4 +1,4 @@
-FROM alpine:3.24.3@sha256:1b7232cda4ca3dc20b5d1247bdc9bfb631f2661d15d323bdd6fccc035ed1a9e7
+FROM alpine:3.24.3@sha256:b3413572228e34bd1c9245f5565e6cd127005655e8a7899aef33d8e83255c9e6
 
 # Pinning the openssh version here does not work well since we can't upgrade the alpine version and the
 # openssh version with the same PR, see https://github.com/renovatebot/renovate/discussions/10452.
