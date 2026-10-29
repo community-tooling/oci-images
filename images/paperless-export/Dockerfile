@@ -1,4 +1,4 @@
-FROM busybox:1.38.0@sha256:fd7dc98638c8e305f4dc34e979f1c0fdfdcaeb0fbf8fcff77ae834b6da3d7e6e AS extract
+FROM busybox:1.38.0@sha256:a46257e06c82ad85242d0d38077d0a52d9896389ca60a1a59d3463db586e5fa4 AS extract
 
 # renovate: datasource=github-releases depName=just-containers/s6-overlay
 ARG S6_OVERLAY_VERSION=v3.2.0.2
