@@ -3,7 +3,7 @@ FROM alpine:3.24.4@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0
 ARG TARGETARCH
 
 # renovate: datasource=github-tags depName=kubernetes/kubectl extractVersion=^kubernetes-(?<version>.*)$
-ARG KUBECTL_VERSION=1.37.2
+ARG KUBECTL_VERSION=1.37.3
 
 ARG URL="https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl"
 
